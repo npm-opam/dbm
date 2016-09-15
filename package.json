@@ -1,0 +1,51 @@
+{
+    "name": "dbm-actual",
+    "exportedEnvVars": {
+        "dbm_enable": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "enable"
+        },
+        "dbm_version": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "1.0.0"
+        },
+        "FINDLIB": {
+            "global": true,
+            "resolveAsRelativePath": true,
+            "globalCollisionBehavior": "joinPath",
+            "val": "./_build/ocamlfind/lib"
+        },
+        "version": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "1.0.0"
+        },
+        "dbm_installed": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "true"
+        },
+        "PATH": {
+            "global": true,
+            "resolveAsRelativePath": true,
+            "globalCollisionBehavior": "joinPath",
+            "val": "./_build/ocamlfind/bin"
+        }
+    },
+    "version": "1.0.0",
+    "dependencies": {
+        "substs": "https://github.com/yunxing/substs.git",
+        "@opam-alpha/ocamlfind": "*",
+        "nopam": "https://github.com/yunxing/nopam.git",
+        "opam-installer-bin": "https://github.com/yunxing/opam-installer-bin.git",
+        "dependency-env": "https://github.com/npm-ml/dependency-env.git"
+    },
+    "scripts": {
+        "postinstall": "eval $(dependencyEnv) && nopam && mkdir -p $opam_lib/dbm && ./configure && make all && make test && make install STUBLIBDIR=$opam_lib/stublibs LIBDIR=$opam_lib/dbm && cp META $opam_lib/dbm && (opam-installer --prefix=$opam_prefix || true)"
+    },
+    "peerDependencies": {
+        "@opam-alpha/ocaml": ">= 4.2.3"
+    }
+}
